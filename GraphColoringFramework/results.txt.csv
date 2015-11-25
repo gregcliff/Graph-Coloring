@@ -1,0 +1,2 @@
+base, coloror, random, #Nodes=50, #Edges=100, K, RandomSeed, #nodes, #relationships, colorCount
+thesis.KColorableGraphGenerator, thesis.DegreeBasedColoring, 8546, 50, 100, 9, 8546, 54, 100, 9
