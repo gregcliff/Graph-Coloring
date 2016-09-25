@@ -365,7 +365,7 @@ The Largest Degree First algorithm shows us that there are ways to approach NP-C
   
   [Packages](#packages)
   
-  [Other](#other)
+  [Tutorials and Learning Resources](#tutorials-and-learning-resources)
 
 ### Works Cited
 Baase, Sara, and Allen Van Gelder. Computer Algorithms: Introduction to Design and Analysis. 3rd ed. Reading, MA: Addison-Wesley Pub., 1978. Print.
