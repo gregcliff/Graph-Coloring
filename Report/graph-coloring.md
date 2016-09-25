@@ -7,20 +7,11 @@
 
 [Algorithm](#algorithm)
   
-[Application](##application)
+[Application](#application)
   
-[Conclusion](##Conclusion)
-
-  [Testing and Future Work](###Testing-and-Future-Work)
-  [Final Analysis](###Final-Analysis)
+[Conclusion](#conclusion)
   
-[Appendices]
-
-  [Works Cited](###Works-Cited)
-  
-  [Packages](###Packages)
-  
-  [Other](###Other)
+[Appendices](#appendices)
   
 # Introduction
 
@@ -67,10 +58,15 @@ Garey and Johnson present the problem in the form that we can approach with a �
 ## Algorithm
 
   [Graph Setup](#graph-setup)
+  
   [Example](#example)
+  
   [Generate the complement](#generate-the-complement)  
+  
   [Implementation](#implementation)  
+  
   [Additional Functionality](#additional-functionality)
+  
 
 The Largest Degree First algorithm is a best effort approximation algorithm.  With the potentially intractable problem of finding the chromatic number, we accept the idea that we currently cannot come up with an answer in polynomial time.  Keeping this in mind, we construct an approximation algorithm.  This concept takes correctness, time complexity, and optimality into consideration.  An approximation algorithm acknowledges that we cannot guarantee a best solution, so it tries to get a good one.  In this case, we sacrifice optimality for the sake of time complexity.  However, it is important that we never break the conditions of the problem.  Our goal is to generate a correct, but not necessarily optimal, coloring in polynomial time.
 
@@ -312,3 +308,21 @@ The application has a few files in its directory.  There are two jar files, a DO
 
 
 Java users will recognize immediately that the run.jar file is the executable, while the main-file.jar is a parameter.  This parameter is the path to the child java application, i.e. the one that is wrapped inside run.jar.  Once a user has added the desired base configurations or coloring methods, he or she can compile his code and substitute the new jar file into this parameter.  A future developer need not change anything other than this “main-file.jar” parameter.  It is easiest to add the jar to the same directory as run.jar, but an absolute path will work as well.
+
+
+
+
+[Conclusion](#conclusion)
+
+  [Testing and Future Work](#testing-and-future-work)
+  
+  [Final Analysis](#final-analysis)
+  
+  [Works Cited](#works-cited)
+  
+  
+[Appendices](#appendices)
+  
+  [Packages](#packages)
+  
+  [Other](#other)
