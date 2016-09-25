@@ -317,7 +317,7 @@ Java users will recognize immediately that the run.jar file is the executable, w
 
 
 
-[Conclusion](#conclusion)
+## Conclusion
 
   [Testing and Future Work](#testing-and-future-work)
   
@@ -325,8 +325,54 @@ Java users will recognize immediately that the run.jar file is the executable, w
   
   [Works Cited](#works-cited)
   
+This section will conclude our analysis of the LDF algorithm.  We will first consider testing data that show relatively positive results.  We will then analyze the algorithm according to the criteria of correctness, optimality, and time complexity.
+
+### Testing and Future Work
+
+Ultimately, this algorithm was designed as a best-effort substitute for a brute force approach to graph coloring.  We obviously cannot show the algorithm is optimal, but we can test its results.  In order to test the algorithm, we must know some information about the graphs it is tested on.  Testing for optimal coloring requires that we know the chromatic number of a graph.  This presents an issue because it requires that we know the solution to the problem we are trying to solve.  We must find a way to create graphs with known chromatic number.
+
+Fortunately, in “A Graph Coloring Algorithm for Large Scheduling Problems,” Frank Leighton outlines an algorithm to generate graphs with known chromatic number.  This is extremely useful for testing a coloring algorithm because one can compare the coloring results to the actual chromatic number.  This thesis will not explicitly cover the design of Leighton’s algorithm, but its contribution was immense.  One of the base configurations in the application is a “K Colorable Graph.”  This follows Leighton’s outline and allows the user to pseudo-randomly generate graphs with a known chromatic number.  Using the interface, we can run tests in bulk.  The results of testing support the claim that the algorithm is a strong substitute.  
+
+| Number of Tests | Number of Nodes | Number of Edges  | Chromatic Number | Average LDF Result |
+| -------------   |:---------------:| ----------------:| :--------------: | :----------------: |
+| 25              | 50              | 100              | 5                | 5.65               |
+| 58              | 50              |   100            | 10               | 10.02              |
+| 41              | 100             |    200           | 10               | 10.14              |
+| 31              | 105             |    200           | 15               | 15                 |
+
+
+	The results of the LDF algorithm with the given variables are good depending on the context of the problem.  With all of these data collected, the overall difference between the calculated color count and K was .20.  Though we could argue more specific statistical claims for each variable set, this supports the idea that there is an 80% chance we will see an optimal coloring when we run a test.  Of course, this has only been shown for Leighton's randomly generated K-colorable graphs, but it stills exhibits value to the design and execution of the algorithm.
+
+	On the other hand, we can clearly see trends for each variable set.  If one compares the tests of 50 nodes, 100 edges, and chromatic number 5 to 105 nodes, 200 edges, and chromatic number 15, one may notice that the latter has much better results.  This could be expected because the algorithm has more colors to “work with.”  In these cases, the node-to-edge ratio is about 1:2.  The chromatic number seems to have a very direct effect on the results of LDF.  In future work, one could conjecture that the algorithm works better on graphs with a higher node-to-edge ratio and higher chromatic number.  A similar conjecture is that the algorithm struggles with a low node-to-edge ratios graphs with relatively small chromatic number.  Though there is not enough evidence to support this claim, one can imagine putting together in-depth analysis of many different test results.  This discussion also brings up an important issue.  For what graphs does the LDF algorithm yield unacceptable results?
+
+	The LDF algorithm seems to yield relatively poor results when dealing with graphs with some level of homogeneity.  Homogeneity in graph coloring means there is some sort of human recognizable order or structure to the graph.  This can be very difficult to detect programmatically, as are most global or “meta” characteristics of graphs.  An example of a homogeneous graph is a cycle graph.  A cycle graph is constructed such that the nodes form a closed loop without additional edges.  The following graphs are five examples of cycle graphs from Wolfram Alpha:
+
+
+
+Cycle graphs are easy to color.  We will consider cases with the number of nodes larger than 1.  If the number of nodes is even, one can optimally color the graph by traversing the loop and alternating between two colors.  If the number of nodes is odd, the same coloring method can be used, but the last uncolored node will require a third color.  It would not be difficult to implement an algorithm that always found the optimal coloring of a cycle graph.  However, the LDF algorithm does not guarantee optimal coloring for this simple graph.  
+
+Consider a cycle with an even number of nodes.  The LDF algorithm has about a 50% chance of finding an optimal coloring.  All the nodes in the cycle graph have a degree of 2.  When the first node is randomly selected for coloring, its first neighbor in the complement graph selected will determine if the algorithm optimally colors.  The next node colored must have 1, 3, 5, or any odd number of nodes between it and the first node.  If the number of nodes between the two is even, the alternating coloring method will break.  The probability of optimal coloring is just under .50.  It is under .5 because the first node is colored.  That is, the algorithm has (n-1)/2 choices that will lead to an optimal coloring, and n/2 non-optimal choices.  After all of this, the algorithm will not color the graph with worse than 1 unnecessary color.  However, results are completely dissatisfactory for other more complex, homogeneous problems.
+
+In the game of Sudoku, the LDF algorithm provides an atrocious solution.  Sudoku is one of the most commonly attempted graph coloring problems, and a human mind could recognize it as homogeneous.  The game is a 9 x 9 grid with existing numbers like so:
+
+
+
+The game is played by filling rows, columns, and the outlined 3 x 3 boxes with numbers 1 through 9.  There cannot be a duplicate 1 through 9 in any row, column, or 3 x 3 box.  The first step to transforming this into a graph is representing each individual box as a node.  Then, all rows, columns, and 3 x 3 boxes are related by edges between the respective nodes.  The numbers are the colors for this particular graph coloring problem.  The LDF algorithm was not designed to work with a partially colored graph, which presents some fundamental problems for this question.  That is because Sudoku is a constraint satisfaction problem, and it should be solved with a searching algorithm.  However, we can still test the functionality of the LDF algorithm on an empty Sudoku graph.  With 5 tests, the LDF algorithm used 12 colors each time to color an empty Sudoku grid.  We know that the chromatic number of the graph is 9, so this is the biggest margin of error we have seen by any problem yet.  This problem further suggests that the LDF algorithm does not perform as well with homogeneous graphs.  This topic is open for much more exploration.
+
+### Final Analysis
+
+This thesis was created with the daunting goal of tackling an NP-Complete problem.  However, we have recognized the difficulty of these problems, so we adjusted our criteria to measure performance.  We knew that our results might not be optimal because LDF is an approximation algorithm.  However, we wanted to guarantee correctness and reasonable time complexity.  In general, the LDF algorithm achieves these goals.
+
+	If nothing else, we always know we have correctness.  As we know from the definition of NP-Complete problems, we can verify that a solution is either correct or incorrect in polynomial time.  This is a relatively straightforward O(n*e) algorithm, where n is the number of nodes and e the average number of edges per node.  You must check the color of each node, and at each node check the color of all neighbors.  With the LDF algorithm, we have created an approximation algorithm that executes in similar time complexity.
+
+	As seen in Chapter 2, Section D, the LDF algorithm executes in polynomial time.  We determine the algorithm to be O(n*e’), with n being the number of nodes and e’ being the average number of edges per node in the complement.  Previously, we agreed that though some polynomial time complexities are worse than others, they are “good.”  With this in mind, the LDF algorithm is an able substitute.  Because NP-Complete problems can currently only be optimized with a brute force approach, we hoped to improve this criterion.
+
+Our final assessment of algorithms was optimality.  This is the criterion we acknowledged would suffer.  However, our testing data showed positive, sometimes optimal results for certain graphs.  We may not be able to guarantee optimality, but we can get close for certain graphs.  Furthermore, in future work, we may be able to measure homogeneity somehow.  With more research, we may be able to make even stronger claims for the probability of an optimal coloring from LDF.
+
+The Largest Degree First algorithm shows us that there are ways to approach NP-Complete problems.  No one has been able to prove P=NP yet, so a practical computer scientist may want to reconsider attempting this.  This exploration of graph coloring and intractability makes it clear: the results may not be perfect, but they give us optimism that we can find new ways to answer these questions.
+
   
-[Appendices](#appendices)
+## Appendices
   
   [Packages](#packages)
   
