@@ -5,34 +5,25 @@
 
 [Introduction](#introduction)
 
-[Algorithm](##Algorithm)
+[Algorithm](#algorithm)
 
-    [Graph Setup](###Graph-Setup)
-  
+  [Graph Setup](###Graph-Setup)
   [Example](###Example)
-  
-  [Generate the complement](###Generate-the-complement)
-  
-  [Implementation](###Implementation)
-  
+  [Generate the complement](###Generate-the-complement)  
+  [Implementation](###Implementation)  
   [Additional Functionality](###Additional-Functionality)
   
 [Application](##Application)
 
-  [Neo4j](###Neo4j)
-  
+  [Neo4j](###Neo4j)  
   [User Interface](###User-Interface)
-  
   [Visuals](###Visuals)
-  
   [Object Oriented Framework](###Object-Oriented_Framework)
-  
   [Project Extension](###Project-Extension)
   
 [Conclusion](##Conclusion)
 
   [Testing and Future Work](###Testing-and-Future-Work)
-  
   [Final Analysis](###Final-Analysis)
   
 [Appendices]
