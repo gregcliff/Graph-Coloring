@@ -3,49 +3,47 @@
 “The limits of the possible can only be defined by going beyond them into the impossible.”
 -Arthur C. Clarke
 
-# Table of Contents
+[Introduction](##Introduction)
 
-1. Introduction
+[Algorithm](##Algorithm)
 
-2. Algorithm - Largest Degree First
+  [Graph Setup](###Graph-Setup)
+  
+  [Example](###Example)
+  
+  [Generate the complement](###Generate-the-complement)
+  
+  [Implementation](###Implementation)
+  
+  [Additional Functionality](###Additional-Functionality)
+  
+[Application](##Application)
 
-  A. Graph Setup
+  [Neo4j](###Neo4j)
   
-  B. Example
+  [User Interface](###User-Interface)
   
-  C. Generate the complement
+  [Visuals](###Visuals)
   
-  D. Implementation
+  [Object Oriented Framework](###Object-Oriented_Framework)
   
-  E. Additional Functionality
+  [Project Extension](###Project-Extension)
   
-3. Application
+[Conclusion](##Conclusion)
 
-  A. Neo4j
+  [Testing and Future Work](###Testing-and-Future-Work)
   
-  B. User Interface
+  [Final Analysis](###Final-Analysis)
   
-  C. Visuals
-  
-  D. Object Oriented Framework
-  
-  E. Project Extension
-  
-4. Conclusion
+[Appendices]
 
-  A. Testing and Future Work
+  [Works Cited](###Works-Cited)
   
-  B. Final Analysis
+  [Packages](###Packages)
   
-5. Appendices
-
-  A. Works Cited
+  [Other](###Other)
   
-  B. Packages
-  
-  C. Other
-  
-## Introduction
+# Introduction
 
 Computers seem like they can do anything.  In the modern world of technology, complicated tasks have been simplified to the single click of a button or sometimes have even been completely automated.  Most people recognize that some advanced software is driving this functionality.  Some could go as far as to say there are “algorithms” involved in this software.  But what does the word algorithms really mean to the common technology user?   It can seem abstract, mystical, or sometimes even generalized to the point of unimportance.   The formal definition of an algorithm in The Merriam-Webster Dictionary is “a rule of procedure for solving a problem (as in mathematics) that frequently involves repetition of an operation.”  This brings the idea of algorithms down to Earth, but we are still missing quite a bit of information in order to have an understanding of algorithms.  An important, often overlooked aspect of algorithms is the classification of them.  Some algorithms give the first acceptable answer they find.  Other algorithms simply say “yes” or “no.”  Some algorithms consistently give the best possible solution to a problem.  Other algorithms can only make a guess.  This introduces an important question: what makes a good algorithm?
 
@@ -87,11 +85,11 @@ QUESTION: Is G K-colorable, i.e., does there exist a function f: V  {1, 2, �
 
 Garey and Johnson present the problem in the form that we can approach with a “guess and check” method.  With this method, we have to provide some K.  We could then guess a solution and verify if it is correct in polynomial time.  However, finding the optimal K, such that K is the chromatic number is an NP-Complete problem.  Optimality is one of our defining traits of algorithms, but we now know not every algorithm can guarantee it.  Getting as close to the chromatic number as possible is the goal of this thesis.
 
-## Algorithm – Largest Degree First
+## Algorithm
 
 The Largest Degree First algorithm is a best effort approximation algorithm.  With the potentially intractable problem of finding the chromatic number, we accept the idea that we currently cannot come up with an answer in polynomial time.  Keeping this in mind, we construct an approximation algorithm.  This concept takes correctness, time complexity, and optimality into consideration.  An approximation algorithm acknowledges that we cannot guarantee a best solution, so it tries to get a good one.  In this case, we sacrifice optimality for the sake of time complexity.  However, it is important that we never break the conditions of the problem.  Our goal is to generate a correct, but not necessarily optimal, coloring in polynomial time.
 
-### A) Graph Setup
+### Graph Setup
 
 As is convention, the set of colors, K will be identified numerically by values {1, 2, …, k} with k being the number of unique colors used in the algorithm.  Note that K is the set of colors, and k is the chromatic number.  The rest of this section will explain the setup and implementation of the LDF algorithm.
 
@@ -99,7 +97,7 @@ Let graph G be a graph with a set of vertices V and a set of edges E.  This can 
 
 We will use the properties of H to perform the coloring on G.  The algorithm only uses nodes and edges from V’ and E’.  First, we will find the node that has the most relationships.2  We will color this node “1.”3  Then, consider all of the node’s neighbors.  The goal is to color as many of these neighbors as possible with “1.” Note that all “1” nodes must form a clique.  This is because a clique in H implies a lack of connection in G.  If a node will not form a clique, it cannot be colored with “1.”  Once all neighbors of the original node have been considered, we can remove all nodes and respective edges with color “1” from G’.  Then, repeat the same steps with the next color using the set of all uncolored nodes.  Continue coloring nodes in this fashion until the complement graph does not have uncolored nodes.  Once all complement nodes have been colored in V’, the corresponding equivalent nodes should be colored in G.
 
-### B) Example
+### Example
 
 We will go through an example of a graph with 5 nodes and 5 relationships:
 
@@ -145,7 +143,7 @@ We will now outline the execution of the coloring using the components we have i
 
 This is a verbal explanation of the algorithm.  The next two sections will focus on technical implementation.
 
-### C) Generate the complement
+### Generate the complement
 
 Assume graph G is already constructed with the following properties in each node: 
 
@@ -171,7 +169,7 @@ With V’ fully initialized, one must simply loop through each node and create r
 
 
 
-### D) Algorithm implementation
+### Implementation
 
 Before beginning implementation of this algorithm, it is important to recognize a few concepts involved in the programming.  First, note the convenience of generating H.  In G, nodes without a common edge must traverse the graph to “find” each other.  The advantage of using H to perform the coloring is that the programmer gets this connection, or lack thereof, without any traversal.  Though it is possible to do this coloring relying on strings and retrieval by node ID, this method offers the advantage of programmatically retrieving neighbors without having to run additional queries.  That is, the database can return a set of neighbors in a single result rather than separately retrieving neighbors by their unique IDs’.
 
@@ -225,8 +223,102 @@ Analysis:  The LDF algorithm executes in reasonable polynomial time complexity. 
 
 It is important to note that there is another step in the algorithm.  Recall that for every node that we attempt to color, we must check if it is adjacent to every node in the coloringString, as defined previously.  This mini-algorithm inside of LDF is O(c), where c is the length of the coloringString.  The coloringString changes depending on each step of the algorithm.  So we define its time complexity separately but recognize that it is a part of LDF.
 
-### E) Additional Functionality
+### Additional Functionality
 
 As an approximation algorithm, LDF does not guarantee an optimal coloring.  There is one option that may offer better results for some graphs.  In its most basic form, the algorithm randomly selects adjacent nodes.  This can be seen in step 4 of the algorithm outline.  By randomly selecting the first neighbor node, we may or may not be coloring the most nodes possible with that color.  While the first neighbor we choose will always form a clique with the original node, it may be a choice that affects the rest of the coloring negatively.  The algorithm builds on the assumption that coloring nodes with more relationships first will ultimately lead to a better coloring.  If we sort the list of adjacent nodes by their degree, we can choose the neighbor that will most likely form a bigger clique.   Adding this extra step will make the algorithm slightly slower, but it does not change the time complexity in terms of n and e’.  It remains O(n*e’) because we are sorting once at the start of each round of coloring, as oppose to resorting at every node we consider.  This will improve the coloring for some graphs.  Essentially, a graph coloring that works well with the original heuristic will generally benefit from sorting the adjacent nodes.
 
 
+## Application
+
+
+This chapter will discuss the design of the graph coloring program.  The language of Chapter 3 requires an understanding of Java, polymorphism, inheritance, and Maven.  First, we will explore Neo4j.  Neo4j is a graph database.  It can be used to create and manipulate representations of graphs on a machine that has Java.  According to neo4j.com, some use cases of Neo4j include Network and IT Management, Fraud Detection, and Social Networking.  This thesis uses the Neo4j API to manage nodes and relationships.  The next section will explore the design of the user interface of the program.  This user interface (UI) was developed with the Swing package in Java.  The third section describes the visual representation of graphs.  This portion of the project was created with the free graphics library, Processing.  Section four explains the object oriented design of the framework.  We will explore the idea of creating different graphs and different algorithms as objects.  The final section of this chapter delves into project expansion, as well as the tools used to allow future developers to add to the framework.
+
+### Neo4j
+
+The graph coloring application uses Neo4j as a backend graph database.  Neo4j has an extensive API with documentation and support.  It handles node and relationship management well because it provides almost any methods necessary for using a graph database.  One useful component for this particular project was Neo4j’s node auto-numbering feature.  Every node is assigned an ID that corresponds to the order it was inserted.  This is useful for the LDF algorithm, as seen above.  
+
+Neo4j offers a few different ways to use the database.  This program uses the “embedded” graph database.  An embedded graph database lives and dies with the application that creates it.  There are a few advantages of the embedded database.  This use of Neo4j does not require any configuration files.   Likewise, there is virtually no security risk.  The embedded database is also slightly faster with certain transactions.  However, it does not continue to run once the application has terminated.  This means the embedded database is essentially a “one and done” use of the database.  There is no easy way to connect to it once the application shuts down.  Furthermore, the embedded graph database must be shut down once and only once within the application.  This introduces a problem for the application.
+
+The problem with the embedded graph database stems from the dependency on the auto numbering feature.  The software assumes that the first node will have the ID 1.  If it does not, forming the complement will fall apart.  Meanwhile, there is no way to restart the auto numbering that Neo4j offers.  Even if a programmer deletes all of the nodes in the database, the auto-numbering will resume where the last added node left off.  So, when the user wants to run two tests, he must run the application two times.  This can be a bit cumbersome and is virtually unusable for large scale testing.  We can solve this issue by wrapping the graph coloring application in another application.
+
+
+
+### User interface 
+
+The user interface for this project is designed to be simple enough to use without a guide and thorough enough to perform advanced testing.  With the following screen capture as a reference, this section will outline the functions of each area of the user interface.
+
+
+
+1. At the top of the interface, there is a text area for the Neo4j graph database location.  By default, this location is the directory of the executed jar file.  The program will create a folder in this directory for all of the Neo4j files and output files.
+
+2. The check boxes are “universal” Boolean values for graph coloring instances.  Tests can be run with the following options:
+
+autosolve – run the selected coloring algorithm without user interaction
+
+autoshutdown – close the window and shutdown the database when coloring is complete
+
+background  - choose to run the graph coloring in the background, with no display6
+
+The main function of these checkboxes is to allow testing with flexibility functionality.  The file output box is the name of the file that will be created for output.  By default, the framework writes all configuration parameters and values to a text and csv file.  The test increment box allows the user to run multiple, consecutive instances of the program without having to start each one individually.  
+
+3. Each graph configuration can have different parameters for the user to adjust.  These parameters will populate the center of the user interface.  Configuring these parameters will be covered in the “Annotations” header of the next section.  
+
+4. As mentioned in section A, there are two dropdown menus at the bottom of the user interface.  The menu on the left contains the subclasses of BaseGraphConfiguration.java, and the menu on the right contains subclasses of GraphColoror.java.  By default, the Largest Degree First algorithm is the only option for the latter. 
+
+5. There is an output console that displays coloring information or errors that the framework detects.  
+
+6. The “Start” and “Clear” buttons perform their appropriate functions of the coloring instance based on the configuration options.  The “Clear” button will become a “Cancel” button when a coloring is running.  These are the main components of the user interface.  Once a coloring is instantiated, an additional window is created for the graph.
+
+### Visuals
+
+The visual representation of a graph in this project uses Processing, a free graphics library.  This library is relatively straightforward and easy to use.  The Main.java class handles all of the Processing API calls, while other classes pass the necessary data to the class to display.  GraphDrawer.java handles the representation of nodes and edges in the problem.  Nodes are simply drawn as a circle, and edges are drawn as a line.  The colors of the nodes are properties in the database, but GraphDrawer.java interprets their values and displays the appropriate color.  If the base configuration sets a name property for the nodes, it will be displayed next to the node.  As explained above, the GraphColoror.java class maintains the distributions of the colors.  The drawer primarily handles their location and size on the screen.  This class also allows the user to view either the base or complement graph.  Because the nodes of each graph are mathematically equivalent, it only stores one set of nodes in memory.  However, the relationships are different within the base and complement, so this class maintains a mapping of each set, V and the V’.  The graph illustration window has a red rectangle around it.  This symbolizes a graph that is not completely or correctly colored.  It will turn green once every node is colored and consistent with the conditions of the problem.
+
+### Object oriented framework 
+
+This project is a framework for problem creation and solution.  There are a few key components to the framework that drive the program.  The two most important classes are the BaseGraphConfiguration.java and GraphColoror.java classes.  The Base Graph Configuration is the setup of the original graph.  It is an abstract class with a few variables and methods already defined.  A developer can extend this class to include new graph setups when the program runs.  This is useful because it allows users to test the LDF algorithm with different types of graphs.  The methods in BaseGraphConfiguration.java allow a derived class to create nodes and relationships.  These inherited methods work smoothly with the existing framework.  On the other hand, there are a few abstract methods in BaseConfiguration.java that must be implemented in its child classes.  These methods are generateNodes() and generateRels().  Any base configuration must set up vertices before it sets up relationships.  For this reason, the classes that drive the program will call generateNodes() first and generateRels() second.  The programmer uses the methods provided by the parent class, called createGraphColoringNode() and createGraphColoringRelationship(), to ensure the graph is created appropriately.  As seen in Chapter 2, there are some node properties and labels that are required for the algorithm.  Using these methods allows the framework to run smoothly.  It will create the complement graph automatically and keep track of how many nodes are created.  
+
+The second important class is the GraphColoror.java class.  This class handles the coloring of the given base graph.  This thesis focuses on the LDF algorithm, but there are many approximation algorithms for graph coloring problems.  The program recognizes the possibility of future improvements for graph coloring, so this class is designed to be expanded with that in mind.  The only method that a subclass must define is the colorNext() method.  This is the method that the framework calls to perform the graph coloring.  This class provides convenience methods for the coloring process.  The currentColor() method returns the string of the color that is currently used.  This was designed for the LDF algorithm, which only uses each color once.  The nextColor() method was designed for the LDF algorithm as well.  Once this method is called, the current color will increment, and the value returned by currentColor() will change.  The class uses Java’s javax package colors, and it can produce about 30 noticeably different colors.  Each color has been automatically overridden to return a unique name with the toString() method.
+
+### Project Extension
+
+This section explores the ability to add extensions to the program.  Understanding this process requires a basic knowledge of three concepts: reflection, Maven, and annotations.  We will first discuss these three topics and put everything together at the end of the section.  The “Reflection” subsection is important to understanding why this is a framework and not just an application.  The Reflections API is a complicated but incredibly powerful tool that plays a crucial role in project extension.  In Subsection 2, I will explain how to extend the project using Maven.  Java users will recognize that there are alternatives to using Maven, namely, adding the appropriate jar file to the build path.  However, that subsection acts as an explanation of my use of Maven as well as the hypothetical extension of a large scale software project.  Part 3 of this section outlines the use of Java Annotations in my project.  Finally, Subsection 4, “Running the Executable” describes how the whole project comes together into a single, executable file.
+
+#### Reflection
+
+The Java Reflections API proved very useful for this thesis.  The Reflections API is a tool that scans the classpath of a Java application at runtime.  It analyzes the manifest file and can programmatically determine superclasses, subclasses, annotations, variable names, and method names.  Determining this information at runtime is very useful for instantiating classes of which the programmer does not know the name.  
+
+This thesis used the Reflections API to find all subclasses of the BaseGraphConfiguration.java and GraphColoror.java classes.  It is easy to do this within a single, local project.  However, it took some more work to achieve this for an expandable project that is actually composed of two jar files.  Using the URIClassLoaders class, the framework actually fetches the class loaders of each jar file, and programmatically adds those class loaders to the configuration of the Reflections API.  These class loaders allow the running jar file to have access to the constructors of the respective classes.  Without them, the framework would be able to detect the name of the subclasses, but it would not know how to instantiate them.  The UI then presents these classes in a dropdown menu, and the user can select which class to use.  Once the user selects the desired classes, the program can instantiate the appropriate classes based solely on their names.  There are a wide variety of uses the Reflections API can offer.
+
+#### Maven
+
+Another tool that makes project extension possible is Apache Maven.  In a development environment like Eclipse, a user can simply add a jar file to the build path of a project.  This is useful for very small projects, but it becomes very difficult to manage working with multiple versions of software or a development team.  For this reason, this thesis used Maven to manage dependencies.  The software made acquiring external jar files easy and manageable.   The easiest way to add a dependency is to include the appropriate tag in Maven’s pom.xml file.  This tag is essentially an identifier that Maven can use to find the appropriate jar file.  With respect to the program’s convenience, this section will explain how to extend the project using Maven rather than simply adding the jar to the build path. 
+
+ A user should have Maven installed on his or her computer with an environmental variable that can run the software.  We will use mvn in accordance with Apache’s tutorials.  It is also necessary to have a copy of the jar file main-file.jar.  Furthermore, the potential future developer should be developing in a Maven project.  The first step is to add the existing graph coloring jar file, main-file.jar, to the local repository.7  Execute the following command to add the jar file to the local repository with the given groupId, artifactId, and version:
+
+
+
+If a user observed the local repository, he or she would be able to find a copy of the jar file following the relative path .m2\repository\graph-coloring\framework\1.0.  The next step is to add the dependency to the pom.xml file.  Assuming one has executed the command above, the tag that he or she adds between the <dependencies> tags is:
+
+ 
+
+This will include the graph coloring framework in the Maven project.  An IDE like Eclipse will now recognize dependencies and contracts embedded in the framework.  If a user extends the BaseConfiguration or GraphColoror class, the extension will appear on the user interface of the graph coloring program.  Note that it is also possible to add external compiled jar files to the pom.xml file using the same method.  The reflections API will still detect these files, and add them as viable run options.  This allows multiple extensions of the software to run under the same framework.  
+
+#### Annotations
+
+Annotations proved useful for this thesis, particularly as a part of the user interface.  The annotation used in this program was the @RunInformation annotation.  With an understanding of Reflection and Maven, the purpose of this annotation becomes clearer.  When the Reflections API scans the classpath, it finds all subclasses of BaseGraphConfiguration.java.  It returns these subclasses as strings with their full package description.  Consider the class CycleConfiguration.java in the package “thesis.”  The Reflections API would display “thesis.CycleConfiguration.”  Likewise, a class from another package included with Maven will have additional text before the class name.  This is not a very user friendly format.  
+
+The @RunInformation annotation allows a programmer to define a name that will be displayed as part of the interface’s dropdown menu.  The other component of this annotation is a string array called properties.  This represents the parameters that a base graph configuration uses.  When a user selects a particular base configuration from the drop down menu, the program will retrieve the class’ annotations.  It will then display the appropriate text areas in order on the interface.  The text areas will be labeled according to the value of their index in the array, and one can set a default value by including “=*someValue*” after the string.  Consider the following annotation:
+
+
+
+This annotation will show “Cycle Configuration” in the drop down menu and display two user adjustable text areas.  The “displayNodeIds” text area will be created with “true” in it like so:
+
+
+
+#### Running the executable
+
+The application has a few files in its directory.  There are two jar files, a DOS script, a text file, and two folders if the user has run tests.  As mentioned above, the software runs as multiple, separate instances of a java application wrapped in another java application.  The complicated nature of this design is simplified by a single DOS script, or batch file.  The file is only one line by default:
+
+
+
+Java users will recognize immediately that the run.jar file is the executable, while the main-file.jar is a parameter.  This parameter is the path to the child java application, i.e. the one that is wrapped inside run.jar.  Once a user has added the desired base configurations or coloring methods, he or she can compile his code and substitute the new jar file into this parameter.  A future developer need not change anything other than this “main-file.jar” parameter.  It is easiest to add the jar to the same directory as run.jar, but an absolute path will work as well.
