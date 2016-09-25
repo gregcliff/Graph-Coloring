@@ -379,23 +379,18 @@ Leighton, F.t. "A Graph Coloring Algorithm for Large Scheduling Problems." Jour
 The Merriam-Webster Dictionary. New York: Pocket, 1974. 35. Print.
 
 ### Packages
-	[Neo4j][neo4j] 
-	
-	[Processing Graphics Library][processing] 
-	
-	[Reflections API][reflections-api]
-	
-	[Commons IO][commons-io]
+
+* [Neo4j][neo4j] 
+* [Processing Graphics Library][processing] 
+* [Reflections API][reflections-api]
+* [Commons IO][commons-io]
 	
 ### Tutorials and Learning Resources
-	
-	[Google Reflections Documentation][google-reflections]
-	
-	[Oracle Documentation][oracle-swing]
-	
-	[Stack Overflow][so]
-	
-	[Annotations Explanation][annotations]
+
+* [Google Reflections Documentation][google-reflections]
+* [Oracle Documentation][oracle-swing]
+* [Stack Overflow][so]
+* [Annotations Explanation][annotations]
 	
 [//]: # (Links)
 
