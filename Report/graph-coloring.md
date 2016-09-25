@@ -334,7 +334,7 @@ Ultimately, this algorithm was designed as a best-effort substitute for a brute 
 Fortunately, in “A Graph Coloring Algorithm for Large Scheduling Problems,” Frank Leighton outlines an algorithm to generate graphs with known chromatic number.  This is extremely useful for testing a coloring algorithm because one can compare the coloring results to the actual chromatic number.  This thesis will not explicitly cover the design of Leighton’s algorithm, but its contribution was immense.  One of the base configurations in the application is a “K Colorable Graph.”  This follows Leighton’s outline and allows the user to pseudo-randomly generate graphs with a known chromatic number.  Using the interface, we can run tests in bulk.  The results of testing support the claim that the algorithm is a strong substitute.  
 
 | Number of Tests | Number of Nodes | Number of Edges  | Chromatic Number | Average LDF Result |
-| -------------   |:---------------:| ----------------:| :--------------: | :----------------: |
+| :-------------: |:---------------:| :---------------:| :--------------: | :----------------: |
 | 25              | 50              | 100              | 5                | 5.65               |
 | 58              | 50              |   100            | 10               | 10.02              |
 | 41              | 100             |    200           | 10               | 10.14              |
