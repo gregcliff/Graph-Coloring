@@ -7,7 +7,7 @@
 
 [Algorithm](##Algorithm)
 
-  [Graph Setup](###Graph-Setup)
+  	[Graph Setup](###Graph-Setup)
   
   [Example](###Example)
   
