@@ -166,36 +166,23 @@ Input: Set of vertices V’’ that is a representation in memory of V’.
 
 Output: The algorithm will color the nodes in the graph database using node representations from V’’.
 
+```
 LDF(Set V’’) 
-
-int k = 0
-
-while (|V’’| > 0)
-
-String coloringString = NULL
-
-sort (V’’ )5
-
-Node current = V’’[0]
-
-for each (Node neighbor in endNodeList(current))
-
-if (endNodeList(neighbor) !contain every element in coloringString)
-
-skip neighbor
-
-else
-
-color neighbor with k
-
-add neighbor to coloringString
-
-remove neighbor from V’’
-
-	remove current from V’’
-
-	k = k + 1
-
+	int k = 0
+	while (|V’’| > 0)
+		String coloringString = NULL
+		sort (V’’ )
+		Node current = V’’[0]
+		for each (Node neighbor in endNodeList(current))
+			if (endNodeList(neighbor) !contain every element in coloringString)
+				skip neighbor
+			else
+				color neighbor with k
+				add neighbor to coloringString
+				remove neighbor from V’’
+		remove current from V’’
+		k = k + 1
+```
 
 
 Basic operation: Best effort approximation algorithm for graph coloring.
