@@ -379,21 +379,31 @@ Leighton, F.t. "A Graph Coloring Algorithm for Large Scheduling Problems." Jour
 The Merriam-Webster Dictionary. New York: Pocket, 1974. 35. Print.
 
 ### Packages
-	Neo4j – www.neo4j.com
+	[Neo4j][neo4j] 
 	
-	Processing Graphics Library – https://processing.org/
+	[Processing Graphics Library][processing] 
 	
-	Reflections API - https://code.google.com/p/reflections/
+	[Reflections API][reflections-api]
 	
-	Commons IO - http://commons.apache.org/proper/commons-io/
+	[Commons IO][commons-io]
 	
 ### Tutorials and Learning Resources
 	
-	Google Reflections Documentation – https://code.google.com/p/reflections
+	[Google Reflections Documentation][google-reflections]
 	
-	Oracle Documentation – https://docs.oracle.com/javase/tutorial/uiswing
+	[Oracle Documentation][oracle-swing]
 	
-	Stack Overflow – http://stackoverflow.com/
+	[Stack Overflow][so]
 	
-	Annotations Explanation – https://java.dzone.com/articles/how-annotations-work-java
+	[Annotations Explanation][annotations]
 	
+[//]: # (Links)
+
+   [neo4j]: <www.neo4j.com>
+   [processing]: <https://processing.org/>
+   [reflections-api]: <https://code.google.com/p/reflections/>
+   [commons-io]:<http://commons.apache.org/proper/commons-io/>
+   [google-reflections]: <https://code.google.com/p/reflections>
+   [oracle-swing]: <https://docs.oracle.com/javase/tutorial/uiswing>
+   [so]: <http://stackoverflow.com/>
+   [annotations]: <https://java.dzone.com/articles/how-annotations-work-java>
