@@ -360,7 +360,36 @@ The Largest Degree First algorithm shows us that there are ways to approach NP-C
 
   
 ## Appendices
+
+  [Works Cited](#works-cited)
   
   [Packages](#packages)
   
   [Other](#other)
+
+### Works Cited
+Baase, Sara, and Allen Van Gelder. Computer Algorithms: Introduction to Design and Analysis. 3rd ed. Reading, MA: Addison-Wesley Pub., 1978. Print.
+Garey, Michael R., and David S. Johnson. Computers and Intractability: A Guide to the Theory of NP-completeness. San Francisco: W.H. Freeman, 1979. Print.
+Knuth, Donald E. "Generating Uniform Random Numbers." The Art of Computer Programming. 2nd ed. Reading, MA: Addison-Wesley, n.d. 9-11. Print.
+Leighton, F.t. "A Graph Coloring Algorithm for Large Scheduling Problems." Journal of Research of the National Bureau of Standards 84.6 (1979): 489. Nvlpus.nist.gov. Web. Nov. 2014.
+The Merriam-Webster Dictionary. New York: Pocket, 1974. 35. Print.
+
+### Packages
+	Neo4j – www.neo4j.com
+	
+	Processing Graphics Library – https://processing.org/
+	
+	Reflections API - https://code.google.com/p/reflections/
+	
+	Commons IO - http://commons.apache.org/proper/commons-io/
+	
+### Tutorials and Learning Resources
+	
+	Google Reflections Documentation – https://code.google.com/p/reflections
+	
+	Oracle Documentation – https://docs.oracle.com/javase/tutorial/uiswing
+	
+	Stack Overflow – http://stackoverflow.com/
+	
+	Annotations Explanation – https://java.dzone.com/articles/how-annotations-work-java
+	
