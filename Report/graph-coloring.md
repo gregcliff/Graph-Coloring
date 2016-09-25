@@ -212,10 +212,15 @@ As an approximation algorithm, LDF does not guarantee an optimal coloring.  Ther
 ## Application
 
   [Neo4j](#neo4j)  
+  
   [User Interface](#user-interface)
+  
   [Visuals](#visuals)
+  
   [Object Oriented Framework](#object-oriented-framework)
+  
   [Project Extension](#project-extension)
+  
 
 This chapter will discuss the design of the graph coloring program.  The language of Chapter 3 requires an understanding of Java, polymorphism, inheritance, and Maven.  First, we will explore Neo4j.  Neo4j is a graph database.  It can be used to create and manipulate representations of graphs on a machine that has Java.  According to neo4j.com, some use cases of Neo4j include Network and IT Management, Fraud Detection, and Social Networking.  This thesis uses the Neo4j API to manage nodes and relationships.  The next section will explore the design of the user interface of the program.  This user interface (UI) was developed with the Swing package in Java.  The third section describes the visual representation of graphs.  This portion of the project was created with the free graphics library, Processing.  Section four explains the object oriented design of the framework.  We will explore the idea of creating different graphs and different algorithms as objects.  The final section of this chapter delves into project expansion, as well as the tools used to allow future developers to add to the framework.
 
