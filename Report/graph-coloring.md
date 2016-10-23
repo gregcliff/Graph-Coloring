@@ -347,7 +347,7 @@ Consider a cycle with an even number of nodes.  The LDF algorithm has about a 50
 
 In the game of Sudoku, the LDF algorithm provides an atrocious solution.  Sudoku is one of the most commonly attempted graph coloring problems, and a human mind could recognize it as homogeneous.  The game is a 9 x 9 grid with existing numbers like so:
 
-![sudoku](resources/sodoku.jpg)
+![sudoku](resources/sudoku.jpg)
 
 The game is played by filling rows, columns, and the outlined 3 x 3 boxes with numbers 1 through 9.  There cannot be a duplicate 1 through 9 in any row, column, or 3 x 3 box.  The first step to transforming this into a graph is representing each individual box as a node.  Then, all rows, columns, and 3 x 3 boxes are related by edges between the respective nodes.  The numbers are the colors for this particular graph coloring problem.  The LDF algorithm was not designed to work with a partially colored graph, which presents some fundamental problems for this question.  That is because Sudoku is a constraint satisfaction problem, and it should be solved with a searching algorithm.  However, we can still test the functionality of the LDF algorithm on an empty Sudoku graph.  With 5 tests, the LDF algorithm used 12 colors each time to color an empty Sudoku grid.  We know that the chromatic number of the graph is 9, so this is the biggest margin of error we have seen by any problem yet.  This problem further suggests that the LDF algorithm does not perform as well with homogeneous graphs.  This topic is open for much more exploration.
 
