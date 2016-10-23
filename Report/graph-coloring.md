@@ -45,7 +45,9 @@ In order to fully understand the complexity of the problem in this thesis, we mu
 
 The problem that this thesis attempts to tackle is an NP-Complete problem.  For this thesis, it will suffice to know that these are the most difficult problems to solve, and we cannot currently solve them in reasonable time.  Unfortunately, some extremely useful problems are NP-Complete.  For example, how do you optimize simultaneous green lights at a traffic intersection?  How do you find out the minimal number of tables to seat a group of guests, some of which cannot sit at the same table?  How do you figure out a final exam schedule that accommodates all students at a college university? These are all examples of NP-Complete scheduling problems, and they can be answered with graph coloring.
 
-We define a graph as a set of nodes and edges.  In the example to the right, we have a set of nodes that is {0, 1, 2, 3, 4}. We also define the unordered pairs of edges between them as {{1,2}, {2,3}, {3,4}, {0,4}, {4,1}}.  In graph theory, these edges represent adjacency.  These sets are a mathematical representation of this particular graph.  
+We define a graph as a set of nodes and edges.  In the example, we have a set of nodes that is {0, 1, 2, 3, 4}. We also define the unordered pairs of edges between them as {{1,2}, {2,3}, {3,4}, {0,4}, {4,1}}.  In graph theory, these edges represent adjacency.  These sets are a mathematical representation of this particular graph.
+
+![the-example](resources/example_img1.jpg)
 
 Graph coloring is a problem that assigns values to each node.  These values are referred to as colors.  The restriction on these colors is that adjacent nodes may not share the same color.  The number of nodes used to color the graph is typically considered the “solution” in graph coloring problems.  This number, when it is as low as possible, is called the chromatic number.  Graph coloring is formally defined in “Computers and Intractability: A Guide to the Theory of NP-Completeness” like so:
 
@@ -82,25 +84,25 @@ We will use the properties of H to perform the coloring on G.  The algorithm onl
 
 We will go through an example of a graph with 5 nodes and 5 relationships:
 
-
+![example1](resources/example_img1.jpg)
 
 This is a small graph.  We know that the chromatic number of this graph is 2 or greater because there is a 2-clique in the graph.  After a few attempts, one can easily see that we can color the graph with 2 colors.  The LDF algorithm achieves the optimal coloring for this example.
 
 The first step is to generate the complement of this graph like so:
 
-
+![example2](resources/example_img2.jpg)
 
 We start the coloring by finding the node with the most relationships.  Node 0 has 3 relationships, so that is the first node we color.  The first color we will use is red.
 
-
+![example3](resources/example_img3.jpg)
 
 We then consider all neighbors of Node 0.  In the most basic design of the algorithm, neighboring nodes are considered without any particular order.  We will consider them in numerical order.  The first node we consider is Node 1.  Node 0 and Node 1 form a 2-clique, so we color Node 1 red.  When we consider Node 2, notice that Node 2 does not form a clique with the nodes that we have already colored red.  This means we drop Node 2.  Node 3 is the final node that we consider.  It forms a 3-clique with Node 0 and Node 1, so we color Node 3 red.  There are no more neighbors of 0, so we are done this round of coloring.
 
-
+![example4](resources/example_img4.jpg)
 
 Once we finish coloring with red, we need to choose another node for the next round of coloring.  We no longer recognize colored nodes or relationships coming from colored nodes.  Though the complement graph is still shown, it is acceptable to remove the colored nodes and their relationships.  The edge between Node 0 and Node 2 is no longer recognized, so Node 2 and Node 4 both have one relationship.  We randomly choose one to start with, and color it green.  Then we see that they form a 2-clique, so we color the final node green as well.  Once all of the complement nodes are colored, we color their corresponding base graph nodes.
 
-
+![example5](resources/example_img5.jpg)
 
 This is an example of a coloring using the LDF algorithm.
 
@@ -225,7 +227,7 @@ The problem with the embedded graph database stems from the dependency on the au
 
 The user interface for this project is designed to be simple enough to use without a guide and thorough enough to perform advanced testing.  With the following screen capture as a reference, this section will outline the functions of each area of the user interface.
 
-
+![ui-diagram](resources/ui_diagram.jpg)
 
 1. At the top of the interface, there is a text area for the Neo4j graph database location.  By default, this location is the directory of the executed jar file.  The program will create a folder in this directory for all of the Neo4j files and output files.
 
@@ -254,6 +256,8 @@ The visual representation of a graph in this project uses Processing, a free gra
 ### Object oriented framework 
 
 This project is a framework for problem creation and solution.  There are a few key components to the framework that drive the program.  The two most important classes are the BaseGraphConfiguration.java and GraphColoror.java classes.  The Base Graph Configuration is the setup of the original graph.  It is an abstract class with a few variables and methods already defined.  A developer can extend this class to include new graph setups when the program runs.  This is useful because it allows users to test the LDF algorithm with different types of graphs.  The methods in BaseGraphConfiguration.java allow a derived class to create nodes and relationships.  These inherited methods work smoothly with the existing framework.  On the other hand, there are a few abstract methods in BaseConfiguration.java that must be implemented in its child classes.  These methods are generateNodes() and generateRels().  Any base configuration must set up vertices before it sets up relationships.  For this reason, the classes that drive the program will call generateNodes() first and generateRels() second.  The programmer uses the methods provided by the parent class, called createGraphColoringNode() and createGraphColoringRelationship(), to ensure the graph is created appropriately.  As seen in Chapter 2, there are some node properties and labels that are required for the algorithm.  Using these methods allows the framework to run smoothly.  It will create the complement graph automatically and keep track of how many nodes are created.  
+
+![ui-example-run](resources/ui_example_run.jpg)
 
 The second important class is the GraphColoror.java class.  This class handles the coloring of the given base graph.  This thesis focuses on the LDF algorithm, but there are many approximation algorithms for graph coloring problems.  The program recognizes the possibility of future improvements for graph coloring, so this class is designed to be expanded with that in mind.  The only method that a subclass must define is the colorNext() method.  This is the method that the framework calls to perform the graph coloring.  This class provides convenience methods for the coloring process.  The currentColor() method returns the string of the color that is currently used.  This was designed for the LDF algorithm, which only uses each color once.  The nextColor() method was designed for the LDF algorithm as well.  Once this method is called, the current color will increment, and the value returned by currentColor() will change.  The class uses Java’s javax package colors, and it can produce about 30 noticeably different colors.  Each color has been automatically overridden to return a unique name with the toString() method.
 
@@ -297,7 +301,7 @@ This annotation will show “Cycle Configuration” in the drop down menu and di
 
 The application has a few files in its directory.  There are two jar files, a DOS script, a text file, and two folders if the user has run tests.  As mentioned above, the software runs as multiple, separate instances of a java application wrapped in another java application.  The complicated nature of this design is simplified by a single DOS script, or batch file.  The file is only one line by default:
 
-
+![detail-ui](resources/detailed_ui.jpg)
 
 Java users will recognize immediately that the run.jar file is the executable, while the main-file.jar is a parameter.  This parameter is the path to the child java application, i.e. the one that is wrapped inside run.jar.  Once a user has added the desired base configurations or coloring methods, he or she can compile his code and substitute the new jar file into this parameter.  A future developer need not change anything other than this “main-file.jar” parameter.  It is easiest to add the jar to the same directory as run.jar, but an absolute path will work as well.
 
@@ -334,7 +338,7 @@ Fortunately, in “A Graph Coloring Algorithm for Large Scheduling Problems,” 
 
 	The LDF algorithm seems to yield relatively poor results when dealing with graphs with some level of homogeneity.  Homogeneity in graph coloring means there is some sort of human recognizable order or structure to the graph.  This can be very difficult to detect programmatically, as are most global or “meta” characteristics of graphs.  An example of a homogeneous graph is a cycle graph.  A cycle graph is constructed such that the nodes form a closed loop without additional edges.  The following graphs are five examples of cycle graphs from Wolfram Alpha:
 
-
+![cycle-graphs](resources/cycle_graphs.jpg)
 
 Cycle graphs are easy to color.  We will consider cases with the number of nodes larger than 1.  If the number of nodes is even, one can optimally color the graph by traversing the loop and alternating between two colors.  If the number of nodes is odd, the same coloring method can be used, but the last uncolored node will require a third color.  It would not be difficult to implement an algorithm that always found the optimal coloring of a cycle graph.  However, the LDF algorithm does not guarantee optimal coloring for this simple graph.  
 
@@ -342,7 +346,7 @@ Consider a cycle with an even number of nodes.  The LDF algorithm has about a 50
 
 In the game of Sudoku, the LDF algorithm provides an atrocious solution.  Sudoku is one of the most commonly attempted graph coloring problems, and a human mind could recognize it as homogeneous.  The game is a 9 x 9 grid with existing numbers like so:
 
-
+![sudoku](resources/sodoku.jpg)
 
 The game is played by filling rows, columns, and the outlined 3 x 3 boxes with numbers 1 through 9.  There cannot be a duplicate 1 through 9 in any row, column, or 3 x 3 box.  The first step to transforming this into a graph is representing each individual box as a node.  Then, all rows, columns, and 3 x 3 boxes are related by edges between the respective nodes.  The numbers are the colors for this particular graph coloring problem.  The LDF algorithm was not designed to work with a partially colored graph, which presents some fundamental problems for this question.  That is because Sudoku is a constraint satisfaction problem, and it should be solved with a searching algorithm.  However, we can still test the functionality of the LDF algorithm on an empty Sudoku graph.  With 5 tests, the LDF algorithm used 12 colors each time to color an empty Sudoku grid.  We know that the chromatic number of the graph is 9, so this is the biggest margin of error we have seen by any problem yet.  This problem further suggests that the LDF algorithm does not perform as well with homogeneous graphs.  This topic is open for much more exploration.
 
