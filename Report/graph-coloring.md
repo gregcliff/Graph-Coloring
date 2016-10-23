@@ -35,7 +35,7 @@ The basic issue with these problems is that a “no” does not really help solv
 
 If we think back to P problems, we can note that P is a subset of NP.  
 
-
+![P_NP_DIAGRAM](resources/p_np_diagram.jpg)
 
 This is because any problem in P can be verified in the same “yes” or “no” fashion as NP problems.  It is important to note that this diagram is not necessarily accurate because we do not yet know P ≠ NP.  We define a problem as intractable if it is “so hard that no polynomial time algorithm can possibly solve it” (Garey and Johnson, 8).  That means if P ≠ NP, the problems in NP – P are intractable.  Furthermore, it is interesting to note that if P = NP, there are no intractable problems in NP.
 
